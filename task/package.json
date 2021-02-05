@@ -1,0 +1,14 @@
+{
+  "name": "task",
+  "version": "1.0.0",
+  "description": "test",
+  "main": "index.js",
+  "scripts": {
+    "ui": "./node_modules/.bin/cypress open"
+  },
+  "author": "EvilTester",
+  "license": "ISC",
+  "dependencies": {
+    "cypress": "^6.4.0"
+  }
+}
