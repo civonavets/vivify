@@ -10,7 +10,7 @@ After you installed it, open the project in your favorite IDE and ```run npm i``
 Once every blue moon, Cypress, and Node.js can haywire, and you will have to try to grap cypress via npm ```npm i cypress```. Usually resolves it. Or delete ```node_moduels``` and try again. If anything else goes haywire, contact your nearest EvilTester.
 
 ## For Postman
-You will need to have Postman for this part ```https://www.postman.com/downloads/```. After you grab it, download the collection file and environment file. Import them inside Postman, and viola.
+You will need to have Postman for this part ```https://www.postman.com/downloads/```. After you grab it, download the collection file and environment file. Import them inside Postman, select enviroment from dropdown (important for access_token) and viola. 
 
 ## Usage
 As CLI commands were not in scope, run everything via UI
