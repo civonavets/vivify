@@ -1,0 +1,696 @@
+{
+	"info": {
+		"_postman_id": "51522e62-dffb-4e8f-ab62-7c4f62cf8185",
+		"name": "Vivify",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Search",
+			"item": [
+				{
+					"name": "Search_galleries_positive",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Check the status of a request\r",
+									"pm.test(\"Request successful!\",  () => {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"// Check the response time \r",
+									"pm.test(\"Response time is acceptable\", () =>  {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+									"});\r",
+									"// Check if there is a response body\r",
+									"let contentTypeHeaderExists = responseHeaders.hasOwnProperty(\"Content-Type\");\r",
+									"tests[\"Has Content-Type\"] = contentTypeHeaderExists;\r",
+									"if (contentTypeHeaderExists) {\r",
+									"    tests[\"Content-Type is application/json\"] = \r",
+									"      responseHeaders[\"Content-Type\"].has(\"application/json\");\r",
+									"}\r",
+									"// Parse in the response body to get data\r",
+									"let jsonData = JSON.parse(responseBody);\r",
+									"  let schema = \r",
+									"  {\r",
+									"  \"type\": \"object\",\r",
+									"  \"properties\": {\r",
+									"    \"galleries\": {\r",
+									"      \"type\": \"array\",\r",
+									"      \"items\": [\r",
+									"        {\r",
+									"          \"type\": \"object\",\r",
+									"          \"properties\": {\r",
+									"            \"id\": {\r",
+									"              \"type\": \"integer\"\r",
+									"            },\r",
+									"            \"title\": {\r",
+									"              \"type\": \"string\"\r",
+									"            },\r",
+									"            \"description\": {\r",
+									"              \"type\": \"string\"\r",
+									"            },\r",
+									"            \"user_id\": {\r",
+									"              \"type\": \"integer\"\r",
+									"            },\r",
+									"            \"created_at\": {\r",
+									"              \"type\": \"string\"\r",
+									"            },\r",
+									"            \"updated_at\": {\r",
+									"              \"type\": \"string\"\r",
+									"            },\r",
+									"            \"user\": {\r",
+									"              \"type\": \"object\",\r",
+									"              \"properties\": {\r",
+									"                \"id\": {\r",
+									"                  \"type\": \"integer\"\r",
+									"                },\r",
+									"                \"first_name\": {\r",
+									"                  \"type\": \"string\"\r",
+									"                },\r",
+									"                \"last_name\": {\r",
+									"                  \"type\": \"string\"\r",
+									"                },\r",
+									"                \"email\": {\r",
+									"                  \"type\": \"string\"\r",
+									"                },\r",
+									"                \"terms_and_conditions\": {\r",
+									"                  \"type\": \"integer\"\r",
+									"                },\r",
+									"                \"created_at\": {\r",
+									"                  \"type\": \"string\"\r",
+									"                },\r",
+									"                \"updated_at\": {\r",
+									"                  \"type\": \"string\"\r",
+									"                }\r",
+									"              },\r",
+									"              \"required\": [\r",
+									"                \"id\",\r",
+									"                \"first_name\",\r",
+									"                \"last_name\",\r",
+									"                \"email\",\r",
+									"                \"terms_and_conditions\",\r",
+									"                \"created_at\",\r",
+									"                \"updated_at\"\r",
+									"              ]\r",
+									"            },\r",
+									"            \"images\": {\r",
+									"              \"type\": \"array\",\r",
+									"              \"items\": [\r",
+									"                {\r",
+									"                  \"type\": \"object\",\r",
+									"                  \"properties\": {\r",
+									"                    \"id\": {\r",
+									"                      \"type\": \"integer\"\r",
+									"                    },\r",
+									"                    \"image_url\": {\r",
+									"                      \"type\": \"string\"\r",
+									"                    },\r",
+									"                    \"gallery_id\": {\r",
+									"                      \"type\": \"integer\"\r",
+									"                    },\r",
+									"                    \"created_at\": {\r",
+									"                      \"type\": \"string\"\r",
+									"                    },\r",
+									"                    \"updated_at\": {\r",
+									"                      \"type\": \"string\"\r",
+									"                    }\r",
+									"                  },\r",
+									"                  \"required\": [\r",
+									"                    \"id\",\r",
+									"                    \"image_url\",\r",
+									"                    \"gallery_id\",\r",
+									"                    \"created_at\",\r",
+									"                    \"updated_at\"\r",
+									"                  ]\r",
+									"                }\r",
+									"              ]\r",
+									"            }\r",
+									"          },\r",
+									"          \"required\": [\r",
+									"            \"id\",\r",
+									"            \"title\",\r",
+									"            \"description\",\r",
+									"            \"user_id\",\r",
+									"            \"created_at\",\r",
+									"            \"updated_at\",\r",
+									"            \"user\",\r",
+									"            \"images\"\r",
+									"          ]\r",
+									"        }\r",
+									"      ]\r",
+									"    }\r",
+									"  },\r",
+									"  \"required\": [\r",
+									"    \"galleries\"\r",
+									"  ],\r",
+									"   \"additionalProperties\": true\r",
+									"};\r",
+									"tests[\"Valid json format is returned, data is displayed!\"] = tv4.validate(jsonData, schema);\r",
+									"tv4.validate(jsonData, schema, false, true);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://gallery-api.vivifyideas.com/api/galleries?term=Gallery",
+							"protocol": "https",
+							"host": [
+								"gallery-api",
+								"vivifyideas",
+								"com"
+							],
+							"path": [
+								"api",
+								"galleries"
+							],
+							"query": [
+								{
+									"key": "term",
+									"value": "Gallery"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search_galleries_negative",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Check the status of a request\r",
+									"pm.test(\"Request successful!\",  () => {\r",
+									"    pm.response.to.have.status(403);\r",
+									"});\r",
+									"// Check the response time \r",
+									"pm.test(\"Response time is acceptable\", () =>  {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+									"});\r",
+									"// Check if there is a response body\r",
+									"let contentTypeHeaderExists = responseHeaders.hasOwnProperty(\"Content-Type\");\r",
+									"tests[\"Has Content-Type\"] = contentTypeHeaderExists;\r",
+									"if (contentTypeHeaderExists) {\r",
+									"    tests[\"Content-Type is application/json\"] = \r",
+									"      responseHeaders[\"Content-Type\"].has(\"application/json\");\r",
+									"}\r",
+									"// Parse in the response body to get data\r",
+									"let jsonData = JSON.parse(responseBody);\r",
+									"  let schema = \r",
+									"{\r",
+									"    \"$schema\": \"http://json-schema.org/schema#\",\r",
+									"    \"id\": \"http:/esag/schemas/sid\",\r",
+									"    \"title\": \"retrival\",\r",
+									"    \"type\": \"object\",\r",
+									"    \"properties\": {\r",
+									"        \"error\"               : { \"type\": \"string\" },\r",
+									" \r",
+									"    },\r",
+									"    \"additionalProperties\": false\r",
+									"};\r",
+									"tests[\"Valid json format is returned, data is displayed!\"] = tv4.validate(jsonData, schema);\r",
+									"tv4.validate(jsonData, schema, false, true);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://gallery-api.vivifyideas.com/api/galleries?term=Gallery",
+							"protocol": "https",
+							"host": [
+								"gallery-api",
+								"vivifyideas",
+								"com"
+							],
+							"path": [
+								"api",
+								"galleries"
+							],
+							"query": [
+								{
+									"key": "term",
+									"value": "Gallery"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Login",
+			"item": [
+				{
+					"name": "Login_positive",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Check the status of a request\r",
+									"pm.test(\"Request successful!\", () =>  {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"// Check the response time \r",
+									"pm.test(\"Response time is acceptable\", () =>  {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+									"});\r",
+									"// Check if there is a response body\r",
+									"let contentTypeHeaderExists = responseHeaders.hasOwnProperty(\"Content-Type\");\r",
+									"tests[\"Has Content-Type\"] = contentTypeHeaderExists;\r",
+									"if (contentTypeHeaderExists) {\r",
+									"    tests[\"Content-Type is application/json\"] = \r",
+									"      responseHeaders[\"Content-Type\"].has(\"application/json\");\r",
+									"}\r",
+									"// Parse in the response body to get data\r",
+									"let jsonData = JSON.parse(responseBody);\r",
+									"      pm.environment.set(\"access_token\", jsonData.access_token);\r",
+									"      console.log(\"Access token is safely stored inside the environment.\");\r",
+									"  let schema = \r",
+									"{\r",
+									"    \"$schema\": \"http://json-schema.org/schema#\",\r",
+									"    \"id\": \"http:/esag/schemas/sid\",\r",
+									"    \"title\": \"retrival\",\r",
+									"    \"type\": \"object\",\r",
+									"    \"properties\": {\r",
+									"        \"access_token\"               : { \"type\": \"string\" },\r",
+									"        \"token_type\"                 : { \"type\": \"string\" },\r",
+									"        \"expires_in\"                 : { \"type\": \"number\" },\r",
+									"        \"user_id\"                    : { \"type\": \"number\"}\r",
+									"    },\r",
+									"    \"additionalProperties\": false\r",
+									"};\r",
+									"tests[\"Valid json format is returned, data is displayed!\"] = tv4.validate(jsonData, schema);\r",
+									"tv4.validate(jsonData, schema, false, true);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\"email\": \"civonavets@gmail.com\",\r\n\"password\": \"somepass123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://gallery-api.vivifyideas.com/api/auth/login",
+							"protocol": "https",
+							"host": [
+								"gallery-api",
+								"vivifyideas",
+								"com"
+							],
+							"path": [
+								"api",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login_negative",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Check the status of a request\r",
+									"pm.test(\"Request successful!\",  () => {\r",
+									"    pm.response.to.have.status(401);\r",
+									"});\r",
+									"// Check the response time \r",
+									"pm.test(\"Response time is acceptable\", () =>  {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+									"});\r",
+									"// Check if there is a response body\r",
+									"let contentTypeHeaderExists = responseHeaders.hasOwnProperty(\"Content-Type\");\r",
+									"tests[\"Has Content-Type\"] = contentTypeHeaderExists;\r",
+									"if (contentTypeHeaderExists) {\r",
+									"    tests[\"Content-Type is application/json\"] = \r",
+									"      responseHeaders[\"Content-Type\"].has(\"application/json\");\r",
+									"}\r",
+									"// Parse in the response body to get data\r",
+									"let jsonData = JSON.parse(responseBody);\r",
+									"  let schema = \r",
+									"{\r",
+									"    \"$schema\": \"http://json-schema.org/schema#\",\r",
+									"    \"id\": \"http:/esag/schemas/sid\",\r",
+									"    \"title\": \"retrival\",\r",
+									"    \"type\": \"object\",\r",
+									"    \"properties\": {\r",
+									"        \"error\"               : { \"type\": \"string\" },\r",
+									" \r",
+									"    },\r",
+									"    \"additionalProperties\": false\r",
+									"};\r",
+									"tests[\"Valid json format is returned, data is displayed!\"] = tv4.validate(jsonData, schema);\r",
+									"tv4.validate(jsonData, schema, false, true);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\"email\": \"random\",\r\n\"password\": \"random\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://gallery-api.vivifyideas.com/api/auth/login",
+							"protocol": "https",
+							"host": [
+								"gallery-api",
+								"vivifyideas",
+								"com"
+							],
+							"path": [
+								"api",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Create Gallery",
+			"item": [
+				{
+					"name": "Create_gallery_positive",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Check the status of a request\r",
+									"pm.test(\"Request successful!\",  () => {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"// Check the response time \r",
+									"pm.test(\"Response time is acceptable\", () =>  {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+									"});\r",
+									"// Check if there is a response body\r",
+									"let contentTypeHeaderExists = responseHeaders.hasOwnProperty(\"Content-Type\");\r",
+									"tests[\"Has Content-Type\"] = contentTypeHeaderExists;\r",
+									"if (contentTypeHeaderExists) {\r",
+									"    tests[\"Content-Type is application/json\"] = \r",
+									"      responseHeaders[\"Content-Type\"].has(\"application/json\");\r",
+									"}\r",
+									"// Parse in the response body to get data\r",
+									"let jsonData = JSON.parse(responseBody);\r",
+									"  let schema = \r",
+									"{\r",
+									"  \"$schema\": \"http://json-schema.org/draft-04/schema#\",\r",
+									"  \"type\": \"object\",\r",
+									"  \"properties\": {\r",
+									"    \"title\": {\r",
+									"      \"type\": \"string\"\r",
+									"    },\r",
+									"    \"description\": {\r",
+									"      \"type\": \"string\"\r",
+									"    },\r",
+									"    \"user_id\": {\r",
+									"      \"type\": \"integer\"\r",
+									"    },\r",
+									"    \"updated_at\": {\r",
+									"      \"type\": \"string\"\r",
+									"    },\r",
+									"    \"created_at\": {\r",
+									"      \"type\": \"string\"\r",
+									"    },\r",
+									"    \"id\": {\r",
+									"      \"type\": \"integer\"\r",
+									"    }\r",
+									"  },\r",
+									"  \"required\": [\r",
+									"    \"title\",\r",
+									"    \"description\",\r",
+									"    \"user_id\",\r",
+									"    \"updated_at\",\r",
+									"    \"created_at\",\r",
+									"    \"id\"\r",
+									"  ],\r",
+									"    \"additionalProperties\": false\r",
+									"};\r",
+									"  \r",
+									"tests[\"Valid json format is returned, data is displayed!\"] = tv4.validate(jsonData, schema);\r",
+									"tv4.validate(jsonData, schema, false, true);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"Gallery\",\r\n    \"description\": \"something\",\r\n    \"images\": [\r\n        \"https://i.imgur.com/DKUR9Tk.jpg\"\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://gallery-api.vivifyideas.com/api/galleries",
+							"protocol": "https",
+							"host": [
+								"gallery-api",
+								"vivifyideas",
+								"com"
+							],
+							"path": [
+								"api",
+								"galleries"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create_gallery_negative",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Check the status of a request\r",
+									"pm.test(\"Request successful!\",  () => {\r",
+									"    pm.response.to.have.status(401);\r",
+									"});\r",
+									"// Check the response time \r",
+									"pm.test(\"Response time is acceptable\", () =>  {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+									"});\r",
+									"// Check if there is a response body\r",
+									"let contentTypeHeaderExists = responseHeaders.hasOwnProperty(\"Content-Type\");\r",
+									"tests[\"Has Content-Type\"] = contentTypeHeaderExists;\r",
+									"if (contentTypeHeaderExists) {\r",
+									"    tests[\"Content-Type is application/json\"] = \r",
+									"      responseHeaders[\"Content-Type\"].has(\"application/json\");\r",
+									"}\r",
+									"// Parse in the response body to get data\r",
+									"let jsonData = JSON.parse(responseBody);\r",
+									"  let schema = \r",
+									"{\r",
+									"    \"$schema\": \"http://json-schema.org/schema#\",\r",
+									"    \"id\": \"http:/esag/schemas/sid\",\r",
+									"    \"title\": \"retrival\",\r",
+									"    \"type\": \"object\",\r",
+									"    \"properties\": {\r",
+									"        \"error\"               : { \"type\": \"string\" },\r",
+									" \r",
+									"    },\r",
+									"    \"additionalProperties\": false\r",
+									"};\r",
+									"tests[\"Valid json format is returned, data is displayed!\"] = tv4.validate(jsonData, schema);\r",
+									"tv4.validate(jsonData, schema, false, true);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"potato\": \"\",\r\n    \"tomato\": 9000\r\n        \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://gallery-api.vivifyideas.com/api/galleries",
+							"protocol": "https",
+							"host": [
+								"gallery-api",
+								"vivifyideas",
+								"com"
+							],
+							"path": [
+								"api",
+								"galleries"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create_gallery_OOB",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Check the status of a request\r",
+									"pm.test(\"Request successful!\",  () => {\r",
+									"    pm.response.to.have.status(422);\r",
+									"});\r",
+									"// Check the response time \r",
+									"pm.test(\"Response time is acceptable\", () =>  {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+									"});\r",
+									"// Check if there is a response body\r",
+									"let contentTypeHeaderExists = responseHeaders.hasOwnProperty(\"Content-Type\");\r",
+									"tests[\"Has Content-Type\"] = contentTypeHeaderExists;\r",
+									"if (contentTypeHeaderExists) {\r",
+									"    tests[\"Content-Type is application/json\"] = \r",
+									"      responseHeaders[\"Content-Type\"].has(\"application/json\");\r",
+									"}\r",
+									"// Parse in the response body to get data\r",
+									"let jsonData = JSON.parse(responseBody);\r",
+									"  let schema = \r",
+									"{\r",
+									"    \"$schema\": \"http://json-schema.org/schema#\",\r",
+									"    \"id\": \"http:/esag/schemas/sid\",\r",
+									"    \"title\": \"retrival\",\r",
+									"    \"type\": \"object\",\r",
+									"    \"properties\": {\r",
+									"        \"error\"               : { \"type\": \"string\" },\r",
+									" \r",
+									"    },\r",
+									"    \"additionalProperties\": false\r",
+									"};\r",
+									"tests[\"Valid json format is returned, data is displayed!\"] = tv4.validate(jsonData, schema);\r",
+									"tv4.validate(jsonData, schema, false, true);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"potato\": \"\",\r\n    \"tomato\": 9000\r\n        \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://gallery-api.vivifyideas.com/api/galleries",
+							"protocol": "https",
+							"host": [
+								"gallery-api",
+								"vivifyideas",
+								"com"
+							],
+							"path": [
+								"api",
+								"galleries"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
